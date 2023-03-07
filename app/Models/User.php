@@ -31,6 +31,11 @@ class User extends Authenticatable
         'ref_code',
         'ref_by',
         'busd_wallet',
+        'balance',  
+        'total_deposit',    
+        'total_airdrop',    
+        'total_referral',
+        'last_paid_deposit' 
 
     ];
 
