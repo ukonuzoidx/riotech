@@ -185,10 +185,7 @@ class DashboardController extends Controller
         if ($user->status == 0) {
             $notify[] = ['error', 'Your account is not activated.'];
             return back()->withNotify($notify);
-        } elseif ($user->airdrop_dex == null) {
-            $notify[] = ['error', 'Submit the contract address, before you can claim an airdrop'];
-            return back()->withNotify($notify);
-        } else {
+        }  else {
 
             // check if the last_paid_deposit is exist or its null
             if ($user->last_login == null) {

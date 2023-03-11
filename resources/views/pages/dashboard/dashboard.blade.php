@@ -169,72 +169,7 @@
                 </div>
             </div>
 
-            {{-- referrals table --}}
-            <div class="tz bg-white bd rounded-sm border border-slate-200">
-                <header class="vc vu cs ch">
-                    <h2 class="gh text-slate-800">Referrals</h2>
-                </header>
-                <div class="dk">
-
-                    <!-- Table -->
-                    <div class="lf">
-                        <table class="ux ou">
-                            <!-- Table header -->
-                            <thead class="go gv gq hp rounded-sm">
-                                <tr>
-                                    <th class="dx lm">
-                                        <div class="gh gt">Name</div>
-                                    </th>
-                                    <th class="dx lm">
-                                        <div class="gh gt">Username</div>
-                                    </th>
-                                    <th class="dx lm">
-                                        <div class="gh gt">Email</div>
-                                    </th>
-                                    <th class="dx lm">
-                                        <div class="gh gt">Join Date</div>
-                                    </th>
-
-                                </tr>
-                            </thead>
-                            <!-- Table body -->
-                            <tbody class="text-sm gp le ln">
-                                @foreach ($logs as $ref)
-                                    <!-- Row -->
-                                    <tr>
-                                        <td class="dx lm zi">
-
-                                            <div class="gd gt">
-                                                {{ $ref->name }}
-                                            </div>
-                                        </td>
-                                        <td class="dx lm">
-                                            <div class="gd gt">
-                                                {{ $ref->username }}
-                                            </div>
-                                        </td>
-                                        <td class="dx lm">
-                                            <div class="gd gt">
-                                                {{ $ref->email }}
-                                            </div>
-
-                                        </td>
-                                        <td class="dx lm">
-                                            <div class="gt">
-                                                {{ $ref->created_at->format('d M, Y') }}
-                                            </div>
-                                        </td>
-
-                                    </tr>
-                                    <!-- Row -->
-                                @endforeach
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
-
+           
 
 
         </div>
