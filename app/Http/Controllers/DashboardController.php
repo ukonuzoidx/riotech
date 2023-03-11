@@ -6,12 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\DataFeed;
 use App\Models\Deposit;
+use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Withdraw;
 use Carbon\Carbon;
 use Image;
 
 class DashboardController extends Controller
 {
+
 
     /**
      * Displays the dashboard screen
@@ -56,22 +59,27 @@ class DashboardController extends Controller
 
         return view('pages/dashboard/deposit', $data);
     }
-
+    /**
+     * Displays the withdraw screen
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    
     public function storeDeposit(Request $request)
     {
         $request->validate([
             'amount' => 'required|numeric|min:1000',
             'image' => 'mimes:png,jpg,jpeg'
         ]);
-
+        
         $user = auth()->user();
-
+        
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $filename = time() . '_' . $user->username . '.jpg';
             $location = 'assets/images/user/deposit/' . $filename;
             $in['image'] = $filename;
-
+            
             $path = './assets/images/user/deposit/';
             $link = $path . $user->image;
             if (file_exists($link)) {
@@ -83,7 +91,7 @@ class DashboardController extends Controller
             $image->resize($size[0], $size[1]);
             $image->save($location);
         }
-
+        
         $in['user_id'] = $user->id;
         $in['amount'] = $request->amount;
         $in['detail'] = 'Deposit request from ' . $user->username . ' with an amount of ' . $request->amount;
@@ -91,12 +99,75 @@ class DashboardController extends Controller
         $in['status'] = 0;
         Deposit::create($in);
 
+        $transaction = new Transaction();
+        $transaction->user_id = $in['user_id'];
+        $transaction->amount = $in['amount'];
+        $transaction->post_balance = getAmount($user->balance);
+        // $transaction->charge = getAmount($data->charge);
+        $transaction->trx_type = '+';
+        $transaction->details = 'Deposit request from ' . $user->username . ' with an amount of ' . $request->amount;
+        $transaction->trx = $in['trx'];
+        $transaction->save();
+        
         $notify[] = ['success', 'Deposit request has been sent successfully.'];
         return back()->withNotify($notify);
     }
+    
+    public function withdraw()
+    {
+        $data['withdraws'] = Withdraw::where('user_id', auth()->id())->latest()->paginate(10);
+
+        return view('pages/dashboard/withdraw', $data);
+    }
+    public function storeWithdraw(Request $request)
+    {
+        $request->validate([
+            'amount' => 'required|numeric|min:10',
+        ]);
+
+        $user = auth()->user();
+
+
+        if (getAmount($request->amount) > $user->balance) {
+            $notify[] = ['error', 'Your Request Amount is Larger Then Your Current Balance.'];
+            return back()->withNotify($notify);
+        }
 
 
 
+        $in['user_id'] = $user->id;
+        $in['amount'] =  getAmount($request->amount);
+        $in['currency'] = 'USD';
+        // $in['charge'] = $request->charge;
+        // $in['final_amount'] = $request->final_amount;
+        // $in['after_charge'] = $request->after_charge;
+        $in['detail'] = 'Withdraw request from ' . $user->username . ' with an amount of ' . $request->amount;
+        $in['trx'] = getTrx();
+        $in['status'] = 0;
+        Withdraw::create($in);
+
+        $user->balance -= $request->amount;
+        $user->save();
+
+
+
+        $transaction = new Transaction();
+        $transaction->user_id = $user->id;
+        $transaction->amount = getAmount($request->amount);
+        $transaction->post_balance = getAmount($user->balance);
+        // $transaction->charge = getAmount($withdraw->charge);
+        $transaction->trx_type = '-';
+        $transaction->details =
+            'Withdraw request from ' . $user->username . ' with an amount of ' . $request->amount;
+        $transaction->trx =  $in['trx'];
+        $transaction->save();
+
+        $notify[] = ['success', 'Withdraw request has been sent successfully.'];
+        return back()->withNotify($notify);
+    }
+
+    
+    
     /**
      * Claim an airdrop
      *
@@ -110,12 +181,14 @@ class DashboardController extends Controller
         // get the current time using carbon    
         $now = Carbon::now();
 
-        if ($user->airdrop_dex == null) {
+        // check if the user is activated
+        if ($user->status == 0) {
+            $notify[] = ['error', 'Your account is not activated.'];
+            return back()->withNotify($notify);
+        } elseif ($user->airdrop_dex == null) {
             $notify[] = ['error', 'Submit the contract address, before you can claim an airdrop'];
             return back()->withNotify($notify);
         } else {
-
-
 
             // check if the last_paid_deposit is exist or its null
             if ($user->last_login == null) {

@@ -49,16 +49,14 @@ class LoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest')->except('logout','logoutGet');
+        $this->middleware('guest')->except('logout', 'logoutGet');
         $this->username = $this->findUsername();
     }
 
     public function showLoginForm()
     {
-  
-        return view('auth.login');
 
-        
+        return view('auth.login');
     }
 
 
@@ -124,7 +122,6 @@ class LoginController extends Controller
         // }
 
         $request->validate($validation_rule);
-
     }
 
     public function logout()
@@ -134,7 +131,7 @@ class LoginController extends Controller
         request()->session()->invalidate();
 
         $notify[] = ['success', 'You have been logged out.'];
-        return redirect()->route('user.login')->withNotify($notify);
+        return redirect()->route('login')->withNotify($notify);
     }
 
 
@@ -143,46 +140,11 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, $user)
     {
-        if ($user->status == 0) {
+        if ($user->status == 2) {
             $this->guard()->logout();
             return redirect()->route('user.login')->withErrors(['Your account has been deactivated.']);
         }
 
-
-
-
-        $ip = $_SERVER["REMOTE_ADDR"];
-
-        $exist = UserLogin::where('user_ip',$ip)->first();
-        $userLogin = new UserLogin();
-        if ($exist) {
-            $userLogin->location =  $exist->location;
-        }else{
-            $info = json_decode(json_encode(getIpInfo()), true);
-            $userLogin->location =  @implode(',',$info['city']) . (" - ". @implode(',',$info['area']) ."- ") . @implode(',',$info['country']) . (" - ". @implode(',',$info['code']) . " ");
-        }
-
-        $userAgent = osBrowser();
-        $userLogin->user_id = $user->id;
-        $userLogin->user_ip =  $ip;
-        $userLogin->last_login = now();
-
-        $userLogin->browser = @$userAgent['browser'];
-        $userLogin->os = @$userAgent['os_platform'];
-        $userLogin->save();
-
-        // check if the last_login is up to 24hrs
-        $last_login = strtotime($user->last_login); 
-        $current_time = strtotime(now());
-        $time_difference = abs($current_time - $last_login);    
-        $number_of_days = $time_difference/86400;
-
-        // if its up to 24hrs give the user its daily airdrop
-
-
-
-        return redirect()->route('user.home');
+        return redirect()->route('user.dashboard');
     }
-
-
 }

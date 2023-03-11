@@ -6,12 +6,12 @@
         </div>
     @endif
     <!-- Form -->
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('user.login') }}">
         @csrf
         <div class="space-y-4">
             <div>
-                <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" type="email" name="email" :value="old('email')" required autofocus />
+                <x-jet-label for="username" value="{{ __('Username or Email') }}" />
+                <x-jet-input id="username" type="username" name="username" :value="old('username')" required autofocus />
             </div>
             <div>
                 <x-jet-label for="password" value="{{ __('Password') }}" />

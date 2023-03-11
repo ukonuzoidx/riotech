@@ -33,6 +33,9 @@ return new class extends Migration
             $table->decimal('total_airdrop', 18, 8)->default(0.00000000);
             $table->decimal('total_referral', 18, 8)->default(0.00000000);
             $table->timestamp('last_paid_deposit')->nullable();
+            $table->string('airdrop_dex')->nullable();
+            $table->timestamp('last_login')->nullable();
+            $table->tinyInteger('status')->default(0);  
             $table->rememberToken();
             $table->timestamps();
         });
@@ -43,7 +46,7 @@ return new class extends Migration
             'username' => 'admin',
             'password' => bcrypt('password'),
             'balance' => 0.000000000,
-            'total_deposit' => 50.000000000,
+            'total_deposit' => 0.000000000,
             'total_airdrop' => 0.000000000,
             'total_referral' => 0.000000000,
             'ref_code' => Str::random(6),

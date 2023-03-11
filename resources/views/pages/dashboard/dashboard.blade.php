@@ -12,86 +12,8 @@
             <div class="sn am jo az jp ft">
 
                 <!-- Add member button -->
-                @if (auth()->user()->airdrop_dex )
-                 <div class="sn am jo az jp ft">
-                <div x-data="{ modalOpen: false }">
-                    <button class="btn ho xi ye" @click.prevent="modalOpen = true" aria-controls="basic-modal">Claim
-                        Airdrop</button>
-                    <!-- Modal backdrop -->
-                    <div class="m w bg-slate-900 pu tx bz" x-show="modalOpen" x-transition:enter="wt wa wr"
-                        x-transition:enter-start="opacity-0" x-transition:enter-end="ba" x-transition:leave="wt wa ws"
-                        x-transition:leave-start="ba" x-transition:leave-end="opacity-0" aria-hidden="true"
-                        style="display: none;"></div>
-                    <!-- Modal dialog -->
-                    <div id="basic-modal" class="m w tx la flex items-center np justify-center vs jj" role="dialog"
-                        aria-modal="true" x-show="modalOpen" x-transition:enter="wt wu wr"
-                        x-transition:enter-start="opacity-0 u_" x-transition:enter-end="ba uj"
-                        x-transition:leave="wt wu wr" x-transition:leave-start="ba uj"
-                        x-transition:leave-end="opacity-0 u_" style="display: none;">
-                        <div class="bg-white rounded bd lu up ou oe" @click.outside="modalOpen = false"
-                            @keydown.escape.window="modalOpen = false">
-                            <!-- Modal header -->
-                            <div class="vc vo cs border-slate-200">
-                                <div class="flex fe items-center">
-                                    <div class="gh text-slate-800">Claim Airdrop</div>
-                                    <button class="gq xv" @click="modalOpen = false">
-                                        <div class="d">Close</div>
-                                        <svg class="oo sl du">
-                                            <path
-                                                d="M7.95 6.536l4.242-4.243a1 1 0 111.415 1.414L9.364 7.95l4.243 4.242a1 1 0 11-1.415 1.415L7.95 9.364l-4.243 4.243a1 1 0 01-1.414-1.415L6.536 7.95 2.293 3.707a1 1 0 011.414-1.414L7.95 6.536z">
-                                            </path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- Modal content -->
-                            <form action="{{ route('my.claim.airdrop') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="vc mc mf">
-                                    <div class="text-sm">
-                                        {{-- <div class="gp text-slate-800 ru">Transfer to this wallet</div> --}}
-                                        <div class="fb">
-                                            <p> 
-                                                Submit the contract address in the space provided and wait for at most 24 hours to receive the airdrop(s)
-                                            </p>
 
-                                            <x-jet-input id="airdrop_dex" type="text" name="airdrop_dex" :value="old('airdrop_dex')"
-                                                placeholder="Airdrop Dex" />
-                                            {{-- image for verification --}}
-                                           
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Modal footer -->
-                                <div class="vc vu">
-                                    <div class="flex flex-wrap justify-end fc">
-                                        <button class="r border-slate-200 hover--border-slate-300 g_"
-                                            @click="modalOpen = false">Close</button>
-                                        <button type="submit" class="r bg-green-700 text-white">Claim</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Add member button -->
-
-            </div>
-
-                    
-                {{-- <a class="btn ho xi ye">
-                    <svg class="oo sl du bf ub" viewBox="0 0 16 16">
-                        <path
-                            d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z">
-                        </path>
-                    </svg>
-                    <span class=" trm nq">Claim Airdrop</span>
-                </a> --}}
-                @else
-                <a class="btn ho xi ye" href="{{ route('claim.airdrop') }}">
+                <a class="btn ho xi ye" href="{{ route('user.claim.airdrop') }}">
                     <svg class="oo sl du bf ub" viewBox="0 0 16 16">
                         <path
                             d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z">
@@ -99,8 +21,8 @@
                     </svg>
                     <span class=" trm nq">Claim Airdrop</span>
                 </a>
-                    
-                @endif
+
+                {{-- @endif --}}
 
             </div>
 
@@ -141,7 +63,8 @@
 
             <!-- Users cards -->
             <!-- Card 1 -->
-            <div class="tz _c tnu bg-white bd rounded-sm border border-slate-200">
+
+            <div class="tz _c tns bg-white bd rounded-sm border border-slate-200">
                 <div class="flex ak sh">
                     <!-- Card top -->
                     <div class="uw dz">
@@ -158,60 +81,27 @@
                         </header>
                         <!-- Bio -->
                         <div class="gn rb">
-                            <div class="text-3xl font-bold yt">$ {{ getAmount(auth()->user()->total_deposit) }}</div>
+                            <div class="text-3xl font-bold yt">$
+                                {{ getAmount(auth()->user()->total_deposit) + getAmount(auth()->user()->total_airdrop) }}
+                            </div>
 
                         </div>
                     </div>
                     <!-- Card footer -->
                     <div class="co border-slate-200">
-                        <a class="block gn text-sm text-indigo-500 xh gp vn vu" href="#">
+                        <a class="block gn text-sm text-indigo-500 xh gp vn vu" href="{{ route('user.my.deposit') }}">
                             <div class="flex items-center justify-center">
 
-                                <span>Claim</span>
+                                <span>Deposit</span>
                             </div>
                         </a>
                     </div>
 
                 </div>
             </div>
-            <!-- Card 2-->
-            <div class="tz _c tnu bg-white bd rounded-sm border border-slate-200">
-                <div class="flex ak sh">
-                    <!-- Card top -->
-                    <div class="uw dz">
 
-                        <!-- Image + name -->
-                        <header>
-
-                            <div class="gn">
-                                <a class="inline-flex text-slate-800 xd" href="#0">
-                                    <h2 class="gf gb justify-center gh">Total Airdrop</h2>
-                                </a>
-                            </div>
-
-                        </header>
-                        <!-- Bio -->
-                        <div class="gn rb">
-                            <div class="text-3xl font-bold yt">$ {{ getAmount(auth()->user()->total_deposit) }}</div>
-
-                        </div>
-                    </div>
-                    <!-- Card footer -->
-                    <div class="co border-slate-200">
-                        <a class="block gn text-sm text-indigo-500 xh gp vn vu" href="#">
-                            <div class="flex items-center justify-center">
-
-                                <span>
-                                    Claim
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-
-                </div>
-            </div>
             <!-- Card 3 -->
-            <div class="tz _c tnu bg-white bd rounded-sm border border-slate-200">
+            <div class="tz _c tns bg-white bd rounded-sm border border-slate-200">
                 <div class="flex ak sh">
                     <!-- Card top -->
                     <div class="uw dz">
@@ -228,16 +118,16 @@
                         </header>
                         <!-- Bio -->
                         <div class="gn rb">
-                            <div class="text-3xl font-bold yt">$ {{ getAmount(auth()->user()->total_deposit) }}</div>
+                            <div class="text-3xl font-bold yt">$ {{ getAmount(auth()->user()->total_withdraw) }}</div>
 
                         </div>
                     </div>
                     <!-- Card footer -->
                     <div class="co border-slate-200">
-                        <a class="block gn text-sm text-indigo-500 xh gp vn vu" href="#">
+                        <a class="block gn text-sm text-indigo-500 xh gp vn vu" href="{{ route('user.my.withdraw') }}">
                             <div class="flex items-center justify-center">
 
-                                <span>Get</span>
+                                <span>Withdraw</span>
                             </div>
                         </a>
                     </div>
@@ -245,7 +135,7 @@
                 </div>
             </div>
             <!-- Card 4 -->
-            <div class="tz _c tnu bg-white bd rounded-sm border border-slate-200">
+            <div class="tz _c tns bg-white bd rounded-sm border border-slate-200">
                 <div class="flex ak sh">
                     <!-- Card top -->
                     <div class="uw dz">
@@ -268,7 +158,7 @@
                     </div>
                     <!-- Card footer -->
                     <div class="co border-slate-200">
-                        <a class="block gn text-sm text-indigo-500 xh gp vn vu" href="#">
+                        <a class="block gn text-sm text-indigo-500 xh gp vn vu" href="{{ route('user.my.ref') }}">
                             <div class="flex items-center justify-center">
 
                                 <span>View</span>

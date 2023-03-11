@@ -30,7 +30,7 @@
                     <div class="flex-1">
                         <div class="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
                             <!-- Logo -->
-                            <a class="block" href="{{ route('dashboard') }}">
+                            <a class="block" href="{{ route('user.dashboard') }}">
                                 <svg width="32" height="32" viewBox="0 0 32 32">
                                     <defs>
                                         <linearGradient x1="28.538%" y1="20.229%" x2="100%" y2="108.156%"
@@ -79,6 +79,43 @@
         </div>
 
     </main>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+
+    @if (session()->has('notify'))
+        @foreach (session('notify') as $msg)
+            <script>
+                'use strict';
+                iziToast.{{ $msg[0] }}({
+                    message: "{{ $msg[1] }}",
+                    position: "topRight"
+                });
+            </script>
+        @endforeach
+    @endif
+
+    @if ($errors->any())
+        <script>
+            'use strict';
+            @foreach ($errors->all() as $error)
+                iziToast.error({
+                    message: '{{ $error }}',
+                    position: "topRight"
+                });
+            @endforeach
+        </script>
+    @endif
+    <script>
+        'use strict';
+
+        function notify(status, message) {
+            iziToast[status]({
+                message: message,
+                position: "topRight"
+            });
+        }
+    </script>
+
 </body>
 
 </html>

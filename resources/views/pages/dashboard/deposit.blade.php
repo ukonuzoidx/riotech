@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                             <!-- Modal content -->
-                            <form action="{{ route('my.deposit.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('user.my.deposit.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="vc mc mf">
                                     <div class="text-sm">
