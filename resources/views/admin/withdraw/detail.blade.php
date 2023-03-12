@@ -12,8 +12,8 @@
                             <h2
                                 class="mt-2 mb-0 text-white transition-all duration-500 [transform:scale(.7)_translateZ(50px)]">
                                 {{ $page_title }}</h2>
-                            {{-- <h1 class="mb-0 text-white transition-all duration-500 [transform:scale(.7)_translateZ(50px)]">
-                                $ {{ getAmount($withdrawal->amount) }}</h1> --}}
+                            {{-- <h5 class="mb-0 text-white transition-all duration-500 [transform:scale(.7)_translateZ(50px)]">
+                             Wallet Info: {{ $withdrawal->withdraw_information }}</h5> --}}
 
                         </div>
                     </div>
@@ -101,6 +101,29 @@
                             </div>
                         </div>
                     </div>
+                    @if($withdrawal->is_airdrop == 1)
+                    <div
+                        class="relative flex flex-col mt-6 min-w-0 break-words bg-white border-0 dark:bg-gray-950 dark:shadow-soft-dark-xl shadow-soft-xl rounded-2xl bg-clip-border">
+                        <div class="flex-auto p-4">
+                            <div class="flex">
+                                <div>
+                                    <div
+                                        class="inline-block w-12 h-12 text-center text-black bg-center rounded-lg fill-current bg-gradient-to-tl from-gray-900 to-slate-800 dark:bg-gradient-to-tl dark:from-slate-850 dark:to-gray-850 stroke-none">
+                                        <i
+                                            class="ni leading-none ni-money-coins text-lg relative top-3.5 text-white opacity-100"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <div>
+                                        <p class="mb-0 font-semibold leading-normal capitalize text-sm dark:text-white/60">
+                                            Wallet </p>
+                                        <h5 class="mb-0 font-bold dark:text-white">{{ $withdrawal->withdraw_information }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
 
                 </div>
             </div>

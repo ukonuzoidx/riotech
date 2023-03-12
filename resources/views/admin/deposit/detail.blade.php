@@ -109,111 +109,107 @@
     </div>
 
     @if ($deposit->status == 0)
-        
-   
+        <div class="flex flex-wrap mt-6 -mx-3">
+            <div class="w-full max-w-full px-3 mt-6 flex-0 lg:mt-0 lg:w-6/12">
+                <div
+                    class="relative flex flex-col min-w-0 overflow-hidden break-words bg-white border-0 dark:bg-gray-950 dark:shadow-soft-dark-xl shadow-soft-xl rounded-2xl bg-clip-border">
+                    <div class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-4 pb-0">
+                        <div class="flex items-center">
+                            <div
+                                class="inline-block w-12 h-12 text-center text-black bg-center rounded-lg fill-current bg-gradient-to-tl from-blue-600 to-cyan-400 stroke-none shadow-soft-2xl">
+                                <i class="ni leading-none ni-calendar-grid-58 text-lg relative top-3.5 text-white"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="mb-0 font-semibold leading-normal capitalize text-sm">Approve Deposit Tab</p>
+                                {{-- <h5 class="mb-0 font-bold dark:text-white">480</h5> --}}
+                            </div>
 
-    <div class="flex flex-wrap mt-6 -mx-3">
-        <div class="w-full max-w-full px-3 mt-6 flex-0 lg:mt-0 lg:w-6/12">
-            <div
-                class="relative flex flex-col min-w-0 overflow-hidden break-words bg-white border-0 dark:bg-gray-950 dark:shadow-soft-dark-xl shadow-soft-xl rounded-2xl bg-clip-border">
-                <div class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-4 pb-0">
-                    <div class="flex items-center">
-                        <div
-                            class="inline-block w-12 h-12 text-center text-black bg-center rounded-lg fill-current bg-gradient-to-tl from-blue-600 to-cyan-400 stroke-none shadow-soft-2xl">
-                            <i class="ni leading-none ni-calendar-grid-58 text-lg relative top-3.5 text-white"></i>
                         </div>
-                        <div class="ml-4">
-                            <p class="mb-0 font-semibold leading-normal capitalize text-sm">Approve Deposit Tab</p>
-                            {{-- <h5 class="mb-0 font-bold dark:text-white">480</h5> --}}
-                        </div>
+                    </div>
+                    <div class="flex-auto p-4 mt-4">
+                        <div>
+                            <form action="{{ route('admin.deposit.approve') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $deposit->id }}">
+                                <div class="modal-body">
+                                    <p>@lang('Are you sure to') <span class="font-bold">@lang('approve')</span> <span
+                                            class="font-bold withdraw-amount text-green-700">
+                                            {{ getAmount($deposit->amount) }} USD
 
+                                        </span> @lang('deposit of')
+                                        <span class="font-bold withdraw-user">
+                                            {{ $deposit->user->username }}
+                                        </span>?
+                                    </p>
+
+
+
+                                </div>
+                                <div class="modal-footer my-4">
+                                    <button type="submit"
+                                        class="inline-block px-6 py-3 mr-3 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-lime-500 leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs">Approve</button>
+
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                <div class="flex-auto p-4 mt-4">
-                    <div>
-                        <form action="{{ route('admin.deposit.approve') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="id" value="{{ $deposit->id }}">
-                            <div class="modal-body">
-                                <p>@lang('Are you sure to') <span class="font-weight-bold">@lang('approve')</span> <span
-                                        class="font-weight-bold withdraw-amount text-green-700">
-                                        {{ getAmount($deposit->amount) }} USD
 
-                                    </span> @lang('deposit of')
-                                    <span class="font-weight-bold withdraw-user">
-                                        {{ $deposit->user->username }}
-                                    </span>?
-                                </p>
-
-
-
-                            </div>
-                            <div class="modal-footer my-4">
-                                <button type="submit"
-                                    class="inline-block px-6 py-3 mr-3 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-lime-500 leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs">Approve</button>
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
+            <div class="w-full max-w-full px-3 mt-6 flex-0 lg:mt-0 lg:w-6/12">
+                <div
+                    class="relative flex flex-col min-w-0 overflow-hidden break-words bg-white border-0 dark:bg-gray-950 dark:shadow-soft-dark-xl shadow-soft-xl rounded-2xl bg-clip-border">
+                    <div class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-4 pb-0">
+                        <div class="flex items-center">
+                            <div
+                                class="inline-block w-12 h-12 text-center text-black bg-center rounded-lg fill-current bg-gradient-to-tl from-blue-600 to-cyan-400 stroke-none shadow-soft-2xl">
+                                <i class="ni leading-none ni-calendar-grid-58 text-lg relative top-3.5 text-white"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="mb-0 font-semibold leading-normal capitalize text-sm">Reject Deposit Tab</p>
+                                {{-- <h5 class="mb-0 font-bold dark:text-white">480</h5> --}}
+                            </div>
 
-        </div>
-        <div class="w-full max-w-full px-3 mt-6 flex-0 lg:mt-0 lg:w-6/12">
-            <div
-                class="relative flex flex-col min-w-0 overflow-hidden break-words bg-white border-0 dark:bg-gray-950 dark:shadow-soft-dark-xl shadow-soft-xl rounded-2xl bg-clip-border">
-                <div class="border-black/12.5 rounded-t-2xl border-b-0 border-solid p-4 pb-0">
-                    <div class="flex items-center">
-                        <div
-                            class="inline-block w-12 h-12 text-center text-black bg-center rounded-lg fill-current bg-gradient-to-tl from-blue-600 to-cyan-400 stroke-none shadow-soft-2xl">
-                            <i class="ni leading-none ni-calendar-grid-58 text-lg relative top-3.5 text-white"></i>
                         </div>
-                        <div class="ml-4">
-                            <p class="mb-0 font-semibold leading-normal capitalize text-sm">Reject Deposit Tab</p>
-                            {{-- <h5 class="mb-0 font-bold dark:text-white">480</h5> --}}
-                        </div>
-
                     </div>
-                </div>
-                <div class="flex-auto p-4 mt-4">
-                    <div>
-                        <form action="{{ route('admin.deposit.reject') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="id" value="{{ $deposit->id }}">
+                    <div class="flex-auto p-4 mt-4">
+                        <div>
+                            <form action="{{ route('admin.deposit.reject') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $deposit->id }}">
 
-                            <div class="modal-body">
-                                <p>@lang('Are you sure to') <span class="font-weight-bold">@lang('reject')</span> <span
-                                        class="font-weight-bold withdraw-amount text-green-700">
-                                        {{ getAmount($deposit->amount) }} USD
+                                <div class="modal-body">
+                                    <p>@lang('Are you sure to') <span class="font-bold">@lang('reject')</span> <span
+                                            class="font-bold withdraw-amount text-green-700">
+                                            {{ getAmount($deposit->amount) }} USD
 
-                                    </span> @lang('deposit of')
-                                    <span class="font-weight-bold withdraw-user">
-                                        {{ $deposit->user->username }}
-                                    </span>?
-                                </p>
+                                        </span> @lang('deposit of')
+                                        <span class="font-bold withdraw-user">
+                                            {{ $deposit->user->username }}
+                                        </span>?
+                                    </p>
 
-                                <div class="form-group">
-                                    <label class="font-weight-bold mt-2">@lang('Reason for Rejection')</label>
-                                    <textarea name="message" rows="5" placeholder="@lang('Reason for Rejection')" required
-                                        class="focus:shadow-soft-primary-outline min-h-unset text-sm leading-5.6 ease-soft block h-auto w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"></textarea>
-                                    {{-- <textarea name="message" id="message" placeholder="@lang('Reason for Rejection')" class="form-control" rows="5"></textarea> --}}
+                                    <div class="form-group">
+                                        <label class="font-bold mt-2">@lang('Reason for Rejection')</label>
+                                        <textarea name="message" rows="5" placeholder="@lang('Reason for Rejection')" required
+                                            class="focus:shadow-soft-primary-outline min-h-unset text-sm leading-5.6 ease-soft block h-auto w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"></textarea>
+                                        {{-- <textarea name="message" id="message" placeholder="@lang('Reason for Rejection')" class="form-control" rows="5"></textarea> --}}
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer my-4">
+                                    <button type="submit"
+                                        class="inline-block px-6 py-3 m-0 ml-2 text-xs font-bold text-center text-white uppercase align-middle transition-all border-0 rounded-lg cursor-pointer ease-soft-in leading-pro tracking-tight-soft bg-gradient-to-tl from-red-600 to-rose-400 shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85">Reject</button>
+
                                 </div>
 
-                            </div>
-                            <div class="modal-footer my-4">
-                                <button type="submit"
-                                    class="inline-block px-6 py-3 m-0 ml-2 text-xs font-bold text-center text-white uppercase align-middle transition-all border-0 rounded-lg cursor-pointer ease-soft-in leading-pro tracking-tight-soft bg-gradient-to-tl from-red-600 to-rose-400 shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85">Reject</button>
-
-                            </div>
-
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
-     
     @endif
 @endsection
 
