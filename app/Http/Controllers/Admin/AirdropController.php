@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\GeneralSetting;
 use App\Http\Controllers\Controller;
 use App\Models\Airdrop;
+use App\Models\AirdropSorted;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\WithdrawMethod;
@@ -19,8 +20,10 @@ class AirdropController extends Controller
     public function index()
     {
         $airdrops = Airdrop::latest()->get();
+        $airdrop_sort = AirdropSorted::latest()->get();
+
         $page_title = 'General Settings';
-        return view('admin.settings.airdrop_settings', compact('page_title', 'airdrops'));
+        return view('admin.settings.airdrop_settings', compact('page_title', 'airdrops', 'airdrop_sort'));
     }
 
     // store

@@ -70,7 +70,7 @@
 
                     <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <title>User Profile</title>
+                        <title>User Management</title>
                         <g id="Basic-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                             <g id="Rounded-Icons" transform="translate(-1717.000000, -291.000000)" fill="#FFFFFF"
                                 fill-rule="nonzero">

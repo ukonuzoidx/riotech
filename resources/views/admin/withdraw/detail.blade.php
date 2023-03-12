@@ -132,12 +132,12 @@
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $withdrawal->id }}">
                                 <div class="modal-body">
-                                    <p>@lang('Are you sure to') <span class="font-weight-bold">@lang('approve')</span> <span
-                                            class="font-weight-bold withdraw-amount text-green-700">
-                                            {{ getAmount($withdrawal->amount) }} USD
+                                    <p>@lang('Are you sure to') <span class="font-bold">@lang('Approve')</span> <span
+                                            class="font-bold withdraw-amount text-green-700">
+                                            {{ getAmount($withdrawal->amount) }} {{ $withdrawal->currency }}
 
                                         </span> @lang('withdrawal of')
-                                        <span class="font-weight-bold withdraw-user">
+                                        <span class="font-bold withdraw-user">
                                             {{ $withdrawal->user->username }}
                                         </span>?
                                     </p>
@@ -179,18 +179,18 @@
                                 <input type="hidden" name="id" value="{{ $withdrawal->id }}">
 
                                 <div class="modal-body">
-                                    <p>@lang('Are you sure to') <span class="font-weight-bold">@lang('reject')</span> <span
-                                            class="font-weight-bold withdraw-amount text-green-700">
-                                            {{ getAmount($withdrawal->amount) }} USD
+                                    <p>@lang('Are you sure to') <span class="font-bold">@lang('Reject')</span> <span
+                                            class="font-bold withdraw-amount text-green-700">
+                                            {{ getAmount($withdrawal->amount) }} {{ $withdrawal->currency }}
 
                                         </span> @lang('withdrawal of')
-                                        <span class="font-weight-bold withdraw-user">
+                                        <span class="font-bold withdraw-user">
                                             {{ $withdrawal->user->username }}
                                         </span>?
                                     </p>
 
                                     <div class="form-group">
-                                        <label class="font-weight-bold mt-2">@lang('Reason for Rejection')</label>
+                                        <label class="font-bold mt-2">@lang('Reason for Rejection')</label>
                                         <textarea name="message" rows="5" placeholder="@lang('Reason for Rejection')" required
                                             class="focus:shadow-soft-primary-outline min-h-unset text-sm leading-5.6 ease-soft block h-auto w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none"></textarea>
                                         {{-- <textarea name="message" id="message" placeholder="@lang('Reason for Rejection')" class="form-control" rows="5"></textarea> --}}

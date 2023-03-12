@@ -161,7 +161,7 @@ class WithdrawalController extends Controller
     {
         // $general = GeneralSetting::first();
         $withdrawal = Withdraw::where('id', $id)->with(['user'])->firstOrFail();
-        $page_title = $withdrawal->user->username . ' Withdraw Requested ' . getAmount($withdrawal->amount) . ' ' . 'USD';
+        $page_title = $withdrawal->user->username . ' Withdraw Requested ' . getAmount($withdrawal->amount) . ' ' . $withdrawal->currency;
         $details = ($withdrawal->withdraw_information != null) ? json_encode($withdrawal->withdraw_information) : null;
 
 
@@ -199,23 +199,26 @@ class WithdrawalController extends Controller
     public function reject(Request $request)
     {
         // $general = GeneralSetting::first();
+        // dd($request->all());
         $request->validate(['id' => 'required|integer']);
         $withdraw = Withdraw::where('id', $request->id)->where('status', 0)->firstOrFail();
 
         $withdraw->status = 3;
-        $withdraw->admin_feedback = $request->details;
+        $withdraw->admin_feedback = $request->message;
         $withdraw->save();
-
+        
         $user = User::find($withdraw->user_id);
-        $user->balance += getAmount($withdraw->amount);
-        $user->save();
+        if ($withdraw->is_airdrop == 0) {
+            $user->balance += getAmount($withdraw->amount);
+            $user->save();
+        }
 
 
 
         $transaction = new Transaction();
         $transaction->user_id = $withdraw->user_id;
         $transaction->amount = $withdraw->amount;
-        $transaction->post_balance = getAmount($user->balance);
+        $transaction->post_balance = $withdraw->is_airdrop ? getAmount($user->balance) : getAmount($user->total_airdrop);
         $transaction->charge = 0;
         $transaction->trx_type = '+';
         $transaction->details = getAmount($withdraw->amount) . ' ' . 'USD' . ' Refunded from Withdrawal Rejection';

@@ -12,7 +12,7 @@
             <div class="sn am jo az jp ft">
 
                 <!-- Add member button -->
-
+                {{-- 
                 <a class="btn ho xi ye" href="{{ route('user.claim.airdrop') }}">
                     <svg class="oo sl du bf ub" viewBox="0 0 16 16">
                         <path
@@ -20,7 +20,7 @@
                         </path>
                     </svg>
                     <span class=" trm nq">Claim Airdrop</span>
-                </a>
+                </a> --}}
 
                 {{-- @endif --}}
 
@@ -64,7 +64,7 @@
             <!-- Users cards -->
             <!-- Card 1 -->
 
-            <div class="tz _c tns bg-white bd rounded-sm border border-slate-200">
+            <div class="tz _c tnu bg-white bd rounded-sm border border-slate-200">
                 <div class="flex ak sh">
                     <!-- Card top -->
                     <div class="uw dz">
@@ -82,7 +82,7 @@
                         <!-- Bio -->
                         <div class="gn rb">
                             <div class="text-3xl font-bold yt">$
-                                {{ getAmount(auth()->user()->total_deposit) + getAmount(auth()->user()->total_airdrop) }}
+                                {{ getAmount(auth()->user()->total_deposit) }}
                             </div>
 
                         </div>
@@ -99,9 +99,46 @@
 
                 </div>
             </div>
+            <!-- Card 2 -->
+
+            <div class="tz _c tnu bg-white bd rounded-sm border border-slate-200">
+                <div class="flex ak sh">
+                    <!-- Card top -->
+                    <div class="uw dz">
+
+                        <!-- Image + name -->
+                        <header>
+
+                            <div class="gn">
+                                <a class="inline-flex text-slate-800 xd" href="#0">
+                                    <h2 class="gf gb justify-center gh">Total Airdrop Received</h2>
+                                </a>
+                            </div>
+
+                        </header>
+                        <!-- Bio -->
+                        <div class="gn rb">
+                            <div class="text-3xl font-bold yt">
+                                {{ getAmount(auth()->user()->total_airdrop) }}
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Card footer -->
+                    <div class="co border-slate-200">
+                        <a class="block gn text-sm text-indigo-500 xh gp vn vu" href="#">
+                            <div class="flex items-center justify-center">
+
+                                <span>History</span>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
 
             <!-- Card 3 -->
-            <div class="tz _c tns bg-white bd rounded-sm border border-slate-200">
+            <div class="tz _c tnu bg-white bd rounded-sm border border-slate-200">
                 <div class="flex ak sh">
                     <!-- Card top -->
                     <div class="uw dz">
@@ -135,7 +172,7 @@
                 </div>
             </div>
             <!-- Card 4 -->
-            <div class="tz _c tns bg-white bd rounded-sm border border-slate-200">
+            <div class="tz _c tnu bg-white bd rounded-sm border border-slate-200">
                 <div class="flex ak sh">
                     <!-- Card top -->
                     <div class="uw dz">
@@ -169,18 +206,98 @@
                 </div>
             </div>
 
-           
 
+            {{-- Airdrop --}}
+            <div class="flex ak tz bg-white bd rounded-sm border border-slate-200 ">
+                <div x-data="handleSelect">
+
+                    <!-- Table -->
+                    <div class="lf">
+                        <table class="ux ou">
+                            <!-- Table header -->
+                            <thead class="go gv gq hp rounded-sm">
+                                <tr>
+                                    <th class="dx lm">
+                                        <div class="gh gt">Airdrop Name</div>
+                                    </th>
+                                    <th class="dx lm">
+                                        <div class="gh gt">Airdrop Price</div>
+                                    </th>
+                                    <th class="dx lm">
+                                        <div class="gh gt">Airdrop Wallet Token</div>
+                                    </th>
+                                    <th class="dx lm">
+                                        <div class="gh gt">Claim</div>
+                                    </th>
+                                    <th class="dx lm">
+                                        <div class="gh gt">Join Date</div>
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <!-- Table body -->
+                            <tbody class="text-sm gp le ln">
+                                @foreach ($airdrops as $airdrop)
+                                    <!-- Row -->
+                                    <tr>
+                                        <td class="dx lm zi">
+
+                                            <div class="gd gt">
+                                                {{ $airdrop->airdrop_name }}
+                                            </div>
+                                        </td>
+                                        <td class="dx lm">
+                                            <div class="gd gt">
+                                                {{ $airdrop->airdrop_price }}
+                                            </div>
+                                        </td>
+                                        <td class="dx lm">
+                                            <div class="gd gt">
+                                                {{ $airdrop->airdrop_wallet_token }}
+                                            </div>
+
+                                        </td>
+                                        <td class="dx lm">
+                                            <div class="gd gt">
+                                                @if ($airdrop->airdrop_sorted == null)
+                                                    <form method="POST"
+                                                        action="{{ route('user.my.claim.airdrop', $airdrop->id) }}">
+                                                        @csrf
+                                                        <input type="hidden" name="id"
+                                                            value="{{ $airdrop->id }}">
+                                                        <button type="submit" href="" class="btn ho xi ye">
+                                                            <span class="trm">Claim</span>
+                                                        </button>
+                                                    </form>
+                                                @else
+                                                    <p>
+                                                        Airdrop Claimed
+                                                    </p>
+                                                @endif
+
+                                            </div>
+
+                                        </td>
+                                        <td class="dx lm">
+                                            <div class="gt">
+                                                {{ $airdrop->created_at->format('d M, Y') }}
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <!-- Row -->
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
 
         </div>
 
-        {{-- <!-- Cards -->
-        <div class="grid grid-cols-12 gap-6">
 
 
-
-
-        </div> --}}
 
     </div>
 </x-app-layout>

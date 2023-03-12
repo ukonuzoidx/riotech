@@ -51,12 +51,15 @@ Route::name('user.')->prefix('user')->group(
                 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
                 // claim airdrop
                 Route::get('/claim-airdrop', [DashboardController::class, 'claimAirdrop'])->name('claim.airdrop');
-                Route::post('/claim-airdrop/dex', [DashboardController::class, 'claimAirdropDex'])->name('my.claim.airdrop');
+                Route::post('/claim-airdrop/{id}', [DashboardController::class, 'claimAirdropDex'])->name('my.claim.airdrop');
                 Route::get('/referral', [DashboardController::class, 'ref'])->name('my.ref');
                 Route::get('/make-deposit', [DashboardController::class, 'deposit'])->name('my.deposit');
                 Route::post('/make-deposit/store', [DashboardController::class, 'storeDeposit'])->name('my.deposit.store');
                 Route::get('/make-withdraw', [DashboardController::class, 'withdraw'])->name('my.withdraw');
                 Route::post('/make-withdraw/store', [DashboardController::class, 'storeWithdraw'])->name('my.withdraw.store');
+                Route::post('/make-withdraw/store/airdrop', [DashboardController::class, 'storeWithdrawAirdrop'])->name('my.withdraw.store.airdrop');
+
+
 
 
 

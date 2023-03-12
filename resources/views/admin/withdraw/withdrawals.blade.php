@@ -10,7 +10,8 @@
                     <a href="{{ route('admin.withdraw.approved') }}">
                         <div class="rounded px-4" style="background-color: rgb(20, 83, 45);">
                             <div class="widget-two__content">
-                                <h2 class="text-white">${{ $withdrawal->where('status', 1)->sum('amount') }}</h2>
+                                <h2 class="text-white">
+                                    ${{ $withdrawal->where('status', 1)->where('is_airdrop', 0)->sum('amount') }}</h2>
                                 <p class="text-white">@lang('Approved Withdrawals')</p>
                             </div>
                     </a>
@@ -20,7 +21,8 @@
                 <a href="{{ route('admin.withdraw.pending') }}">
                     <div class="rounded px-4 bg--6" style="background-color: rgb(202, 138, 4);">
                         <div class="widget-two__content">
-                            <h2 class="text-white">${{ $withdrawal->where('status', 0)->sum('amount') }}</h2>
+                            <h2 class="text-white">
+                                ${{ $withdrawal->where('status', 0)->where('is_airdrop', 0)->sum('amount') }}</h2>
                             <p class="text-white">@lang('Pending Withdrawals')</p>
                         </div>
                 </a>
@@ -30,7 +32,47 @@
             <a href="{{ route('admin.withdraw.rejected') }}">
                 <div class="rounded px-4 bg--pink" style="background-color: rgb(189, 0, 0);">
                     <div class="widget-two__content">
-                        <h2 class="text-white">${{ $withdrawal->where('status', 3)->sum('amount') }}</h2>
+                        <h2 class="text-white">${{ $withdrawal->where('status', 3)->where('is_airdrop', 0)->sum('amount') }}
+                        </h2>
+                        <p class="text-white">@lang('Rejected Withdrawals')</p>
+                    </div>
+            </a>
+        </div><!-- widget-two end -->
+    </div>
+    </div>
+    <div class="flex flex-wrap -mx-3">
+        <div class="flex-none w-full max-w-full px-3">
+            {{-- @if (request()->routeIs('admin.withdraw.log') || request()->routeIs('admin.withdraw.method') || request()->routeIs('admin.users.withdrawals') || request()->routeIs('admin.users.withdrawals.method')) --}}
+            <div class="flex flex-wrap mt-6 -mx-3">
+
+                <div class="w-full max-w-full px-3 mt-6 flex-0 lg:mt-0 lg:w-4/12">
+                    <a href="{{ route('admin.withdraw.approved') }}">
+                        <div class="rounded px-4" style="background-color: rgb(20, 83, 45);">
+                            <div class="widget-two__content">
+                                <h4 class="text-white">Airdrop
+                                    {{ $withdrawal->where('status', 1)->where('is_airdrop', 1)->sum('amount') }}</h4>
+                                <p class="text-white">@lang('Approved Withdrawals')</p>
+                            </div>
+                    </a>
+                </div><!-- widget-two end -->
+            </div>
+            <div class="w-full max-w-full px-3 mt-6 flex-0 lg:mt-0 lg:w-4/12">
+                <a href="{{ route('admin.withdraw.pending') }}">
+                    <div class="rounded px-4 bg--6" style="background-color: rgb(202, 138, 4);">
+                        <div class="widget-two__content">
+                            <h4 class="text-white">Airdrop
+                                {{ $withdrawal->where('status', 0)->where('is_airdrop', 1)->sum('amount') }}</h4>
+                            <p class="text-white">@lang('Pending Withdrawals')</p>
+                        </div>
+                </a>
+            </div><!-- widget-two end -->
+        </div>
+        <div class="w-full max-w-full px-3 mt-6 flex-0 lg:mt-0 lg:w-4/12">
+            <a href="{{ route('admin.withdraw.rejected') }}">
+                <div class="rounded px-4 bg--pink" style="background-color: rgb(189, 0, 0);">
+                    <div class="widget-two__content">
+                        <h4 class="text-white">Airdrop
+                            {{ $withdrawal->where('status', 3)->where('is_airdrop', 1)->sum('amount') }}</h4>
                         <p class="text-white">@lang('Rejected Withdrawals')</p>
                     </div>
             </a>
@@ -98,8 +140,9 @@
                                 <td
                                     class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                     <div class="flex items-center justify-center">
-                                        <span
-                                            class="mr-2 font-semibold leading-tight text-xs">{{ getAmount($withdraw->amount) }}</span>
+                                        <span class="mr-2 font-semibold leading-tight text-xs">
+                                            {{ getAmount($withdraw->amount) }} {{ $withdraw->currency }}
+                                        </span>
                                         <div>
 
                                         </div>

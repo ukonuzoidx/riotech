@@ -41,13 +41,14 @@
                                 </div>
                             </div>
                             <!-- Modal content -->
-                            <form action="{{ route('user.my.deposit.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('user.my.deposit.store') }}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <div class="vc mc mf">
                                     <div class="text-sm">
-                                        <div class="gp text-slate-800 ru">Transfer to this wallet</div>
+                                        <div class="gp text-slate-800 ru">Make Deposit</div>
                                         <div class="fb">
-                                            <p>Crypto Address: <strong>1771bswhjqwjkqjqnqnnq </strong>.</p>
+                                            {{-- <p>Crypto Address: <strong>1771bswhjqwjkqjqnqnnq </strong>.</p> --}}
 
                                             <x-jet-input id="ref_code" type="text" name="amount" :value="old('ref_code')"
                                                 placeholder="Amount" />
@@ -132,7 +133,7 @@
                                         </td>
                                         <td class="dx lm">
                                             <div class="gd gt">
-                                              USD  {{ getAmount($deposit->amount) }}
+                                                USD {{ getAmount($deposit->amount) }}
                                             </div>
                                         </td>
                                         <td class="dx lm">

@@ -236,16 +236,17 @@
                         <tr>
                             <th class="text-left">Airdrop Name</th>
                             <th class="text-left">Airdrop Wallet Token</th>
-                            {{-- <th  class="text-left">Airdrop User Count</th> --}}
+                            <th  class="text-left">Airdrop User name</th>
                             <th class="text-left">Airdrop Price</th>
                             <th class="text-left">Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($airdrops as $airdrop)
+                        @forelse ($airdrop_sort as $airdrop)
                             <tr>
                                 <td>{{ $airdrop->airdrop_name }}</td>
                                 <td>{{ $airdrop->airdrop_wallet_token }}</td>
+                                <td>{{ $airdrop->user->name }}</td>
                                 <td>{{ $airdrop->airdrop_price }}</td>
                                 <td>{{ showDate($airdrop->created_at) }}</td>
                             </tr>

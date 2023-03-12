@@ -27,6 +27,7 @@ return new class extends Migration
             $table->decimal('after_charge', 18, 8)->nullable();
             $table->text('admin_feedback')->nullable();
             $table->text('withdraw_information')->nullable();
+            $table->tinyInteger('is_airdrop')->default(0);
             $table->timestamps();
         });
     }

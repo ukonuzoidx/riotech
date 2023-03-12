@@ -10,9 +10,10 @@
 
             <!-- Right: Actions -->
             <div class="sn am jo az jp ft">
+                {{-- withdraw balance --}}
                 <div x-data="{ modalOpen: false }">
-                    <button class="btn ho xi ye" @click.prevent="modalOpen = true" aria-controls="basic-modal">Make
-                        Withdrawal</button>
+                    <button class="btn ho xi ye" @click.prevent="modalOpen = true" aria-controls="basic-modal">
+                        Withdraw Balance</button>
                     <!-- Modal backdrop -->
                     <div class="m w bg-slate-900 pu tx bz" x-show="modalOpen" x-transition:enter="wt wa wr"
                         x-transition:enter-start="opacity-0" x-transition:enter-end="ba" x-transition:leave="wt wa ws"
@@ -29,7 +30,7 @@
                             <!-- Modal header -->
                             <div class="vc vo cs border-slate-200">
                                 <div class="flex fe items-center">
-                                    <div class="gh text-slate-800">Make Withdrawal</div>
+                                    <div class="gh text-slate-800">Withdraw Balance</div>
                                     <button class="gq xv" @click="modalOpen = false">
                                         <div class="d">Close</div>
                                         <svg class="oo sl du">
@@ -60,7 +61,8 @@
                                     <div class="flex flex-wrap justify-end fc">
                                         <button class="r border-slate-200 hover--border-slate-300 g_"
                                             @click="modalOpen = false">Close</button>
-                                        <button type="submit" class="r bg-green-700 text-white">Withdraw</button>
+                                        <button type="submit" class="r bg-green-700 text-white">Withdraw
+                                            Balance</button>
                                     </div>
                                 </div>
                             </form>
@@ -68,7 +70,81 @@
                     </div>
                 </div>
 
-                <!-- Add member button -->
+                <!-- Withdraw Airdrop -->
+                <div x-data="{ modalOpen: false }">
+                    <button class="btn ho xi ye" @click.prevent="modalOpen = true" aria-controls="basic-modal">
+                        Withdraw Airdrop</button>
+                    <!-- Modal backdrop -->
+                    <div class="m w bg-slate-900 pu tx bz" x-show="modalOpen" x-transition:enter="wt wa wr"
+                        x-transition:enter-start="opacity-0" x-transition:enter-end="ba" x-transition:leave="wt wa ws"
+                        x-transition:leave-start="ba" x-transition:leave-end="opacity-0" aria-hidden="true"
+                        style="display: none;"></div>
+                    <!-- Modal dialog -->
+                    <div id="basic-modal" class="m w tx la flex items-center np justify-center vs jj" role="dialog"
+                        aria-modal="true" x-show="modalOpen" x-transition:enter="wt wu wr"
+                        x-transition:enter-start="opacity-0 u_" x-transition:enter-end="ba uj"
+                        x-transition:leave="wt wu wr" x-transition:leave-start="ba uj"
+                        x-transition:leave-end="opacity-0 u_" style="display: none;">
+                        <div class="bg-white rounded bd lu up ou oe" @click.outside="modalOpen = false"
+                            @keydown.escape.window="modalOpen = false">
+                            <!-- Modal header -->
+                            <div class="vc vo cs border-slate-200">
+                                <div class="flex fe items-center">
+                                    <div class="gh text-slate-800">Withdraw Airdrop</div>
+                                    <button class="gq xv" @click="modalOpen = false">
+                                        <div class="d">Close</div>
+                                        <svg class="oo sl du">
+                                            <path
+                                                d="M7.95 6.536l4.242-4.243a1 1 0 111.415 1.414L9.364 7.95l4.243 4.242a1 1 0 11-1.415 1.415L7.95 9.364l-4.243 4.243a1 1 0 01-1.414-1.415L6.536 7.95 2.293 3.707a1 1 0 011.414-1.414L7.95 6.536z">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Modal content -->
+                            <form action="{{ route('user.my.withdraw.store.airdrop') }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="vc mc mf">
+                                    <div class="text-sm">
+
+                                        <div class="fb">
+                                            <input class="form-input w-full" id="amount" type="number"
+                                                name="amount" placeholder="Amount" required>
+
+                                            <select name="airdrop_currency" id=""
+                                                class="form-input w-full a" required>
+                                                <option value="">Select Airdrop</option>
+                                                @foreach (auth()->user()->airdrop_sorted as $val)
+                                                    <option value="{{ $val->airdrop_name }}">
+                                                        {{ $val->airdrop_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+
+                                            <input class="form-input w-full" id="wallet" type="text"
+                                                name="withdraw_information" placeholder="Input your Wallet Address"
+                                                required />
+                                            <small>
+                                                Make sure the wallet address is correct
+                                            </small>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="vc vu">
+                                    <div class="flex flex-wrap justify-end fc">
+                                        <button class="r border-slate-200 hover--border-slate-300 g_"
+                                            @click="modalOpen = false">Close</button>
+                                        <button type="submit" class="r bg-green-700 text-white">Withdraw
+                                            Airdrop</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
@@ -103,6 +179,9 @@
                                         <div class="gh gt">Status</div>
                                     </th>
                                     <th class="dx lm">
+                                        <div class="gh gt">Admin Feedback</div>
+                                    </th>
+                                    <th class="dx lm">
                                         <div class="gh gt">Join Date</div>
                                     </th>
 
@@ -121,7 +200,7 @@
                                         </td>
                                         <td class="dx lm">
                                             <div class="gd gt">
-                                              USD  {{ getAmount($withdraw->amount) }}
+                                                {{ $withdraw->currency }} {{ getAmount($withdraw->amount) }}
                                             </div>
                                         </td>
                                         <td class="dx lm">
@@ -138,6 +217,11 @@
                                                 @endif
                                             </div>
 
+                                        </td>
+                                        <td class="dx lm">
+                                            <div class="gd gt">
+                                                {{ $withdraw->admin_feedback }}
+                                            </div>
                                         </td>
                                         <td class="dx lm">
                                             <div class="gt">
