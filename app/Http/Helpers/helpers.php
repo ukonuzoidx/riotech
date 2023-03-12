@@ -118,7 +118,8 @@ function getDailyFromDeposit($id)
     if ($user->last_paid_deposit == null) {
         if ($user->total_deposit > 0) {
             // if yes assign 1 percent to the deposit to the user
-            $user->balance += ($user->total_deposit * 0.01);
+            $deposit = ($user->total_deposit +    $user->total_airdrop) * 0.01;
+            $user->balance += $deposit;
 
             $user->save();
         }
@@ -129,7 +130,11 @@ function getDailyFromDeposit($id)
         // check if the total_deposit of this user is > 0 
         if ($user->total_deposit > 0) {
             // if yes assign 1 percent to the deposit to the user
-            $user->balance += ($user->total_deposit * 0.01);
+            // $user->balance += ($user->total_deposit * 0.01);
+            $deposit = ($user->total_deposit +    $user->total_airdrop) * 0.01;
+
+            $user->balance += $deposit;
+
 
             $user->save();
         }

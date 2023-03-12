@@ -14,10 +14,10 @@
          </nav>
 @endsection
 
-@push('css')
+{{-- @push('css')
     <link href="{{ asset('backend/assets/css/soft-ui-dashboard-tailwind.css') }}" rel="stylesheet" />
     
-@endpush
+@endpush --}}
 
 @section('content')
     <div class="w-full px-6 py-6 mx-auto">

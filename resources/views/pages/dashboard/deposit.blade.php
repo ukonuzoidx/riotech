@@ -52,14 +52,14 @@
                                             <x-jet-input id="ref_code" type="text" name="amount" :value="old('ref_code')"
                                                 placeholder="Amount" />
                                             {{-- image for verification --}}
-                                            <div class="mt-4">
+                                            {{-- <div class="mt-4">
                                                 <x-jet-label for="image" value="{{ __('Upload Payment Proof') }}" />
                                                 <x-jet-input id="image" class="block mt-1 w-full" type="file"
                                                     name="image" accept="image/*" onchange="loadFile(event)"
                                                     :value="old('image')" required />
 
 
-                                            </div>
+                                            </div> --}}
 
 
 

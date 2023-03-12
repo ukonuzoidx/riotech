@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Airdrop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\DataFeed;
@@ -64,34 +65,34 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    
+
     public function storeDeposit(Request $request)
     {
         $request->validate([
             'amount' => 'required|numeric|min:1000',
-            'image' => 'mimes:png,jpg,jpeg'
+            // 'image' => 'mimes:png,jpg,jpeg'
         ]);
-        
+
         $user = auth()->user();
-        
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '_' . $user->username . '.jpg';
-            $location = 'assets/images/user/deposit/' . $filename;
-            $in['image'] = $filename;
-            
-            $path = './assets/images/user/deposit/';
-            $link = $path . $user->image;
-            if (file_exists($link)) {
-                @unlink($link);
-            }
-            $size = imagePath()['verify']['deposit']['size'];
-            $image = Image::make($image);
-            $size = explode('x', strtolower($size));
-            $image->resize($size[0], $size[1]);
-            $image->save($location);
-        }
-        
+
+        // if ($request->hasFile('image')) {
+        //     $image = $request->file('image');
+        //     $filename = time() . '_' . $user->username . '.jpg';
+        //     $location = 'assets/images/user/deposit/' . $filename;
+        //     $in['image'] = $filename;
+
+        //     $path = './assets/images/user/deposit/';
+        //     $link = $path . $user->image;
+        //     if (file_exists($link)) {
+        //         @unlink($link);
+        //     }
+        //     $size = imagePath()['verify']['deposit']['size'];
+        //     $image = Image::make($image);
+        //     $size = explode('x', strtolower($size));
+        //     $image->resize($size[0], $size[1]);
+        //     $image->save($location);
+        // }
+
         $in['user_id'] = $user->id;
         $in['amount'] = $request->amount;
         $in['detail'] = 'Deposit request from ' . $user->username . ' with an amount of ' . $request->amount;
@@ -108,11 +109,11 @@ class DashboardController extends Controller
         $transaction->details = 'Deposit request from ' . $user->username . ' with an amount of ' . $request->amount;
         $transaction->trx = $in['trx'];
         $transaction->save();
-        
+
         $notify[] = ['success', 'Deposit request has been sent successfully.'];
         return back()->withNotify($notify);
     }
-    
+
     public function withdraw()
     {
         $data['withdraws'] = Withdraw::where('user_id', auth()->id())->latest()->paginate(10);
@@ -166,8 +167,8 @@ class DashboardController extends Controller
         return back()->withNotify($notify);
     }
 
-    
-    
+
+
     /**
      * Claim an airdrop
      *
@@ -176,44 +177,53 @@ class DashboardController extends Controller
     public function claimAirdrop()
     {
         $user = auth()->user();
+        $airdrop = Airdrop::first();
+        $date = Carbon::parse($airdrop->airdrop_date);
         // get the last_paid_deposit using carbon
         $last_paid_deposit = Carbon::parse($user->last_login);
         // get the current time using carbon    
         $now = Carbon::now();
 
-        // check if the user is activated
-        if ($user->status == 0) {
-            $notify[] = ['error', 'Your account is not activated.'];
+        if ($date->diffInHours($now) >= 24) {
+
+            $notify[] = ['error', 'Airdrop for today has not been set.'];
             return back()->withNotify($notify);
-        }  else {
-
-            // check if the last_paid_deposit is exist or its null
-            if ($user->last_login == null) {
-                if ($user->total_airdrop > 0) {
-                    // if yes assign 1 percent to the deposit to the user
-                    // $user->balance += ($user->total_airdrop);
-
-                    // $user->save();
-                }
-                // after assigning the 1 percent make sure the user doesn't get it again till after 24 hours    
-                $user->last_login = Carbon::now();
-                $user->save();
-            } elseif ($last_paid_deposit->diffInHours($now) >= 24) {
-                // check if the total_deposit of this user is > 0 
-                // if ($user->total_deposit > 0) {
-                //     // if yes assign 1 percent to the deposit to the user
-                //     $user->balance += ($user->total_deposit * 0.01);
-
-                //     $user->save();
-                // }
-                // after assigning the 1 percent make sure the user doesn't get it again till after 24 hours
-                $user->last_login = Carbon::now();
-                $user->save();
-            } else {
-                $notify[] = ['error', 'You can claim airdrop once in 24 hours.'];
+        } else
+   // check if the user is activated
+            if ($user->status == 0) {
+                $notify[] = ['error', 'Your account is not active. Make a Deposit to claim.'];
                 return back()->withNotify($notify);
+            } else {
+
+                // check if the last_paid_deposit is exist or its null
+                if ($user->last_login == null) {
+                    if ($user->total_airdrop > 0) {
+                        // if yes assign 1 percent to the deposit to the user
+                        // $user->balance += ($user->total_airdrop);
+
+                        // $user->save();
+                    }
+                    // after assigning the 1 percent make sure the user doesn't get it again till after 24 hours  
+                    $user->total_airdrop += $airdrop->airdrop_price;
+                    $user->last_login = Carbon::now();
+                    $user->save();
+                } elseif ($last_paid_deposit->diffInHours($now) >= 24) {
+                    // check if the total_deposit of this user is > 0 
+                    // if ($user->total_deposit > 0) {
+                    //     // if yes assign 1 percent to the deposit to the user
+                    //     $user->balance += ($user->total_deposit * 0.01);
+
+                    //     $user->save();
+                    // }
+                    // after assigning the 1 percent make sure the user doesn't get it again till after 24 hours
+                    $user->total_airdrop += $airdrop->airdrop_price;
+                    $user->last_login = Carbon::now();
+                    $user->save();
+                } else {
+                    $notify[] = ['error', 'You can claim airdrop once in 24 hours.'];
+                    return back()->withNotify($notify);
+                }
             }
-        }
         $notify[] = ['success', 'Airdrop has been claimed successfully.'];
         return back()->withNotify($notify);
     }

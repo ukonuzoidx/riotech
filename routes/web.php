@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ManageUsersController;
 use App\Http\Controllers\Admin\DepositController;
 use App\Http\Controllers\Admin\WithdrawalController;
+use App\Http\Controllers\Admin\AirdropController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,7 +85,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('dashboard',  [AdminController::class, 'dashboard'])->name('dashboard');
 
         // mannage Users
-          // Users Manager
+        // Users Manager
         Route::get('users', [ManageUsersController::class, 'allUsers'])->name('users.all');
         Route::get('users/active', [ManageUsersController::class, 'activeUsers'])->name('users.active');
         Route::get('users/banned', [ManageUsersController::class, 'bannedUsers'])->name('users.banned');
@@ -152,5 +153,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('method/deactivate', 'WithdrawMethodController@deactivate')->name('method.deactivate');
         });
 
+        // airdrop
+        Route::get('airdrop', [AirdropController::class, 'index'])->name('airdrop.index');
+        Route::post('airdrop/update', [AirdropController::class, 'update'])->name('airdrop.update');
     });
 });
