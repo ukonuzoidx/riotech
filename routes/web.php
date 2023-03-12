@@ -155,6 +155,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         // airdrop
         Route::get('airdrop', [AirdropController::class, 'index'])->name('airdrop.index');
+        Route::post('airdrop/store', [AirdropController::class, 'store'])->name('airdrop.store');
         Route::post('airdrop/update', [AirdropController::class, 'update'])->name('airdrop.update');
     });
 });

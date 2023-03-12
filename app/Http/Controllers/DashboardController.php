@@ -28,6 +28,7 @@ class DashboardController extends Controller
         // get all referrals for auth user
         $data['total_ref'] = User::where('ref_by', auth()->id())->count();
         $data['logs'] = User::where('ref_by', auth()->id())->latest()->take(5)->get();
+        $data['airdrops'] = Airdrop::latest()->get();
 
         getDailyFromDeposit(auth()->id());
 

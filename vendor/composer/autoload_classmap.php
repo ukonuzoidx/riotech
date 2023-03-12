@@ -46,6 +46,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Models\\Admin' => $baseDir . '/app/Models/Admin.php',
     'App\\Models\\Airdrop' => $baseDir . '/app/Models/Airdrop.php',
+    'App\\Models\\AirdropSorted' => $baseDir . '/app/Models/AirdropSorted.php',
     'App\\Models\\DataFeed' => $baseDir . '/app/Models/DataFeed.php',
     'App\\Models\\Deposit' => $baseDir . '/app/Models/Deposit.php',
     'App\\Models\\Transaction' => $baseDir . '/app/Models/Transaction.php',

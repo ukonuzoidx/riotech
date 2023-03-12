@@ -18,17 +18,21 @@ return new class extends Migration
         Schema::create('airdrops', function (Blueprint $table) {
             $table->id();
             $table->decimal('airdrop_price', 18, 2)->default(0.00000000);
+            $table->string('airdrop_name')->nullable();
+            $table->string('airdrop_wallet_token')->nullable();
             $table->tinyInteger('airdrop_status')->nullable();
             $table->string('airdrop_date')->nullable(); 
             $table->timestamps();
         });
 
-        Airdrop::create([
-            'airdrop_price' => 0.00000000,
-            'airdrop_status' => 0,
-            'airdrop_date' => Carbon::now(),
+        // Airdrop::create([
+        //     'airdrop_price' => 0.00000000,
+        //     'airdrop_name' => 'RIO',
+        //     'airdrop_wallet_token' => 'RIO',
+        //     'airdrop_status' => 0,
+        //     'airdrop_date' => Carbon::now(),
         
-        ]);
+        // ]);
 
 
     }

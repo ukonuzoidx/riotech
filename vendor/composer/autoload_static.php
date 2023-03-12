@@ -608,6 +608,7 @@ class ComposerStaticInitc4f43d762e99044ff2abed8f06fd7b78
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Models\\Admin' => __DIR__ . '/../..' . '/app/Models/Admin.php',
         'App\\Models\\Airdrop' => __DIR__ . '/../..' . '/app/Models/Airdrop.php',
+        'App\\Models\\AirdropSorted' => __DIR__ . '/../..' . '/app/Models/AirdropSorted.php',
         'App\\Models\\DataFeed' => __DIR__ . '/../..' . '/app/Models/DataFeed.php',
         'App\\Models\\Deposit' => __DIR__ . '/../..' . '/app/Models/Deposit.php',
         'App\\Models\\Transaction' => __DIR__ . '/../..' . '/app/Models/Transaction.php',

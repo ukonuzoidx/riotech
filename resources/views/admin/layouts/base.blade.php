@@ -31,6 +31,7 @@
     <link href="{{ asset('backend/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- Main Styling -->
     <link href="{{ asset('backend/assets/css/soft-ui-dashboard-tailwind.css') }}" rel="stylesheet" />
+    @stack('css')
 
 </head>
 
@@ -47,46 +48,56 @@
 <!-- main script file  -->
 <script src="{{ asset('backend/assets/js/choice.js') }}" async></script>
 <script src="{{ asset('backend/assets/js/soft-ui-dashboard-tailwind.js?v=1.0.4') }}" async></script>
+<script src="https://www.creative-tim.com/learning-lab/assets/tailwind-soft-ui-dashboard/datatables.min.js"></script>
+</script>
 
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css"
-        integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
-        integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    @if (session()->has('notify'))
-        @foreach (session('notify') as $msg)
-            <script>
-                'use strict';
-                iziToast.{{ $msg[0] }}({
-                    message: "{{ $msg[1] }}",
-                    position: "topRight"
-                });
-            </script>
-        @endforeach
-    @endif
 
-    @if ($errors->any())
+
+<!--Regular Datatables CSS-->
+<link href="{{ asset('backend/assets/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+<!--Responsive Extension Datatables CSS-->
+<link href="{{ asset('backend/assets/css/responsive.dataTables.min.css') }}" rel="stylesheet">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css"
+    integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+    integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+@if (session()->has('notify'))
+    @foreach (session('notify') as $msg)
         <script>
             'use strict';
-            @foreach ($errors->all() as $error)
-                iziToast.error({
-                    message: '{{ $error }}',
-                    position: "topRight"
-                });
-            @endforeach
-        </script>
-    @endif
-    <script>
-        'use strict';
-
-        function notify(status, message) {
-            iziToast[status]({
-                message: message,
+            iziToast.{{ $msg[0] }}({
+                message: "{{ $msg[1] }}",
                 position: "topRight"
             });
-        }
+        </script>
+    @endforeach
+@endif
+
+@if ($errors->any())
+    <script>
+        'use strict';
+        @foreach ($errors->all() as $error)
+            iziToast.error({
+                message: '{{ $error }}',
+                position: "topRight"
+            });
+        @endforeach
     </script>
+@endif
+<script>
+    'use strict';
+
+    function notify(status, message) {
+        iziToast[status]({
+            message: message,
+            position: "topRight"
+        });
+    }
+</script>
 
 
 </html>

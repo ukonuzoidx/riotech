@@ -18,9 +18,22 @@ class AirdropController extends Controller
 {
     public function index()
     {
-        $general = Airdrop::first();
+        $airdrops = Airdrop::latest()->get();
         $page_title = 'General Settings';
-        return view('admin.settings.airdrop_settings', compact('page_title', 'general'));
+        return view('admin.settings.airdrop_settings', compact('page_title', 'airdrops'));
+    }
+
+    // store
+    public function store(Request $request)
+    {
+        $airdrop = new Airdrop();
+        $airdrop->airdrop_price = $request->airdrop_price;
+        $airdrop->airdrop_name = $request->airdrop_name;
+        $airdrop->airdrop_wallet_token = $request->airdrop_wallet_token;
+        $airdrop->save();
+
+        $notify[] = ['success', 'Airdrop Set.'];
+        return back()->withNotify($notify);
     }
 
     public function update(Request $request)
@@ -29,7 +42,7 @@ class AirdropController extends Controller
 
 
         $general_setting = Airdrop::first();
-        $request->merge(['airdrop_status' => 1 ]);
+        $request->merge(['airdrop_status' => 1]);
         $request->merge(['airdrop_data' => Carbon::now()]);
 
 
