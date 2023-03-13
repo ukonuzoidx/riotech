@@ -186,6 +186,7 @@ class DepositController extends Controller
         $request->validate(['id' => 'required|integer']);
         $deposit = Deposit::where('id', $request->id)->where('status', 0)->firstOrFail();
         $deposit->status = 1;
+        $deposit->admin_feedback = "Successful";
         $deposit->save();
 
         $user = User::find($deposit->user_id);
@@ -229,7 +230,7 @@ class DepositController extends Controller
         ]);
         $deposit = Deposit::where('id', $request->id)->where('status', 0)->firstOrFail();
 
-        // $deposit->admin_feedback = $request->message;
+        $deposit->admin_feedback = $request->message;
         $deposit->status = 3;
         $deposit->save();
 

@@ -46,12 +46,22 @@
                                 @csrf
                                 <div class="vc mc mf">
                                     <div class="text-sm">
-                                        <div class="gp text-slate-800 ru">Make Deposit</div>
+                                        <div class="gp text-slate-800 ru">Transfer to this wallet</div>
                                         <div class="fb">
-                                            {{-- <p>Crypto Address: <strong>1771bswhjqwjkqjqnqnnq </strong>.</p> --}}
+                                            <p>
+                                                <small>
+                                                Copy this
 
-                                            <x-jet-input id="ref_code" type="text" name="amount" :value="old('ref_code')"
-                                                placeholder="Amount" />
+                                                     Crypto Address: </small>
+                                                <strong>0x713aF600Eb997Be4Eb81A52b8E407734D72a85C2
+                                                </strong>. BUSD-BEP20
+                                            </p>
+
+                                            <x-jet-input id="amount" type="text" name="amount" :value="old('amount')"
+                                                placeholder="Amount" required />
+
+                                            <x-jet-input id="wallet_address" type="text" name="wallet_address" :value="old('wallet_address')"
+                                                placeholder="Paste your wallet address for confirmation" required />
                                             {{-- image for verification --}}
                                             {{-- <div class="mt-4">
                                                 <x-jet-label for="image" value="{{ __('Upload Payment Proof') }}" />
@@ -115,6 +125,9 @@
                                         <div class="gh gt">Status</div>
                                     </th>
                                     <th class="dx lm">
+                                        <div class="gh gt">Admin Feedback</div>
+                                    </th>
+                                    <th class="dx lm">
                                         <div class="gh gt">Join Date</div>
                                     </th>
 
@@ -151,6 +164,11 @@
                                                 @endif
                                             </div>
 
+                                        </td>
+                                           <td class="dx lm">
+                                            <div class="gd gt">
+                                                {{ $deposit->admin_feedback }}
+                                            </div>
                                         </td>
                                         <td class="dx lm">
                                             <div class="gt">

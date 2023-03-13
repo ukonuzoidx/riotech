@@ -14,7 +14,7 @@ class Deposit extends Model
         'user_id',
         'amount',
         'detail',
-        'image',
+        'wallet_address',
         'trx',
         'try',
         'status',

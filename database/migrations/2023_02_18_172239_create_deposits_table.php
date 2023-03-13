@@ -20,8 +20,9 @@ return new class extends Migration
             $table->bigInteger('user_id');  
             $table->decimal('amount', 18, 8);
             $table->text('detail')->nullable();
-            $table->string('image')->nullable();
+            $table->string('wallet_address')->nullable();
             $table->string('trx')->nullable();
+            $table->text('admin_feedback')->nullable();
             $table->integer('try')->default(0);
             $table->tinyInteger('status')->default(0);  
             $table->timestamps();

@@ -74,8 +74,11 @@ class DashboardController extends Controller
     {
         $request->validate([
             'amount' => 'required|numeric|min:10',
+            'wallet_address' => 'required',
             // 'image' => 'mimes:png,jpg,jpeg'
         ]);
+
+        // dd($request->all());
 
         $user = auth()->user();
 
@@ -99,6 +102,7 @@ class DashboardController extends Controller
 
         $in['user_id'] = $user->id;
         $in['amount'] = $request->amount;
+        $in['wallet_address'] = $request->wallet_address;
         $in['detail'] = 'Deposit request from ' . $user->username . ' with an amount of ' . $request->amount;
         $in['trx'] = getTrx();
         $in['status'] = 0;

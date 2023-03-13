@@ -175,7 +175,7 @@ class WithdrawalController extends Controller
         $request->validate(['id' => 'required|integer']);
         $withdraw = Withdraw::where('id', $request->id)->where('status', 0)->with('user')->firstOrFail();
         $withdraw->status = 1;
-        $withdraw->admin_feedback = $request->details;
+        $withdraw->admin_feedback = "Successful";
         $withdraw->save();
 
         // $general = GeneralSetting::first();
