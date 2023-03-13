@@ -188,10 +188,10 @@
                 <table id="example" class=" table-flush text-slate-500 stripe hover" style="width:100%; padding: 1em;">
                     <thead class="thead-light">
                         <tr>
-                            <th class="text-left">Airdrop Name</th>
-                            <th class="text-left">Airdrop Wallet Token</th>
-                            {{-- <th  class="text-left">Airdrop User Count</th> --}}
-                            <th class="text-left">Airdrop Price</th>
+                            <th class="text-left">Token Name</th>
+                            <th class="text-left">Token Wallet Address</th>
+                            {{-- <th  class="text-left">Token User Count</th> --}}
+                            <th class="text-left">Quantity</th>
                             <th class="text-left">Date</th>
                         </tr>
                     </thead>
